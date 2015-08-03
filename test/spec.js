@@ -69,6 +69,22 @@ describe('Block', function() {
 
 })
 
+describe('BlockArray', function() {
+
+  describe('days', function() {
+    it('should generate a BlockArray of individual days from the given start and end times', function() {
+      freebusy.BlockArray.days(day3, day0)
+        .toObject()
+        .should.eql([
+          { start: day3, end: day2 },
+          { start: day2, end: day1 },
+          { start: day1, end: day0 }
+        ])
+    })
+  })
+
+})
+
 describe('freebusy', function() {
 
   it('should return a free day', function() {

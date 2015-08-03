@@ -28,6 +28,30 @@ Block.prototype.toObject = function () {
 }
 
 function BlockArray() {
+  this.blocks = []
+}
+
+BlockArray.prototype.subtract = function (block) {
+
+}
+
+BlockArray.prototype.toObject = function () {
+  return this.blocks.map(function (block) {
+    return block.toObject()
+  })
+}
+
+BlockArray.days = function (start, end) {
+  var blockArray = new BlockArray()
+
+  var current = moment(start);
+  while(current < end) {
+    var next = current.clone().add(1, 'days')
+    blockArray.blocks.push(new Block(current.toDate(), next.toDate()))
+    current = next
+  }
+
+  return blockArray
 }
 
 function freebusy(start, end, events, rules) {
