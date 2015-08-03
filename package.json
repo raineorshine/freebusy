@@ -1,0 +1,29 @@
+{
+  "name": "freebusy",
+  "version": "0.0.0",
+  "description": "Determine free blocks from a list of events and free/busy rules.",
+  "license": "ISC",
+  "repository": "metaraine/freebusy",
+  "author": {
+    "name": "Raine Lourie",
+    "url": "https://github.com/metaraine"
+  },
+  "engines": {
+    "node": "0.12.x"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "calendar",
+    "schedule",
+    "free",
+    "busy",
+    "time",
+    "conflict",
+    "block"
+  ],
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  }
+}
