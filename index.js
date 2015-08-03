@@ -11,10 +11,10 @@ function Block(start, end) {
   this.end = end
 }
 
-Block.prototype.subtract = function (block) {
+Block.prototype.subtract = function (subtrahend) {
   return [
-    new Block(this.start, block.start),
-    new Block(block.end, this.end)
+    new Block(this.start, subtrahend.start),
+    new Block(subtrahend.end, this.end)
   ].filter(function (block) {
     return block.end > block.start
   })
@@ -31,8 +31,14 @@ function BlockArray() {
   this.blocks = []
 }
 
-BlockArray.prototype.subtract = function (block) {
-
+BlockArray.prototype.subtract = function (subtrahend) {
+  return this.blocks
+    .map(function (minuend) {
+      return minuend.subtract(subtrahend)
+    })
+    .filter(function (block) {
+      return block.end > block.start
+    })
 }
 
 BlockArray.prototype.toObject = function () {

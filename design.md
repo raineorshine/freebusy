@@ -62,7 +62,7 @@ Block
 BlockArray
 - constructor   Date start, Date end
 - blocks    [Block]
-  An array of non-overlapping free blocks for a single day
+  An array of non-overlapping free blocks
 - subtract      Block -> ø
   Reduces the blocks by the given block
 - days          Date start, Date end
