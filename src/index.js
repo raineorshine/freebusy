@@ -3,13 +3,19 @@ var Block      = require('./block.js')
 var Rule       = require('./rule.js')
 var BlockArray = require('./block-array.js')
 
-function freebusy(start, end, events, rules) {
+/**
+ * @param args.start
+ * @param args.end
+ * @param args.events
+ * @param args.rules
+ */
+function freebusy(args) {
 
-  events = events || []
-  rules = rules ? rules.map(Rule.fromObject) : [Rule.true]
+  args.events = args.events || []
 
-  var busyEvents = events.filter(λ(event) -> rules.some(λ.match(event)))
-  var freeDays = BlockArray.days(start, end)
+  var rules = args.rules ? args.rules.map(Rule.fromObject) : [Rule.true]
+  var busyEvents = args.events.filter(λ(event) -> rules.some(λ.match(event)))
+  var freeDays = BlockArray.days(args.start, args.end)
 
   var remainingTime = busyEvents.reduce(function (remainingTime, nextEvent) {
     return remainingTime.subtract(new Block(nextEvent.start, nextEvent.end))

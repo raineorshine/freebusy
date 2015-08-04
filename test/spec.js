@@ -266,14 +266,18 @@ describe('freebusy', function() {
   }
 
   it('should return a free day', function() {
-    freebusy(day1, day0, [])
+    freebusy({ start: day1, end: day0 })
     .should.eql([
       { start: day1, end: day0 }
     ])
   })
 
   it('should return two free slots when there is an event in the middle of one day', function() {
-    freebusy(day1, day0, [day1event])
+    freebusy({
+      start: day1,
+      end: day0,
+      events: [day1event]
+    })
     .should.eql([
       { start: day1, end: day1event.start },
       { start: day1event.end, end: day0 }
@@ -281,7 +285,12 @@ describe('freebusy', function() {
   })
 
   it('should mark events that match a rule as busy', function() {
-    freebusy(day1, day0, [day1event], [{ field: 'title', value: 'school' }])
+    freebusy({
+      start: day1,
+      end: day0,
+      events: [day1event],
+      rules: [{ field: 'title', value: 'school' }]
+    })
     .should.eql([
       { start: day1, end: day1event.start },
       { start: day1event.end, end: day0 }
@@ -289,7 +298,12 @@ describe('freebusy', function() {
   })
 
   it('should ignore events that do not match a rule', function() {
-    freebusy(day1, day0, [day1event], [{ field: 'title', value: 'blah' }])
+    freebusy({
+      start: day1,
+      end: day0,
+      events: [day1event],
+      rules: [{ field: 'title', value: 'blah' }]
+    })
     .should.eql([
       { start: day1, end: day0 }
     ])
