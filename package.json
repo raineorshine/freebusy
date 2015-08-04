@@ -21,7 +21,8 @@
   "scripts": {
     "test": "mocha",
     "watch": "nodemon -w src -w test -x 'npm run build && npm run test'",
-    "build": "mkdir -p lib && sjs -m lambda-chop/macros -o $npm_package_config_sweet_out $npm_package_config_sweet_in"
+    "sweet": "sjs -m lambda-chop/macros -o lib/index.js src/index.js && sjs -m lambda-chop/macros -o lib/block.js src/block.js && sjs -m lambda-chop/macros -o lib/block-array.js src/block-array.js",
+    "build": "mkdir -p lib && npm run sweet"
   },
   "keywords": [
     "calendar",
