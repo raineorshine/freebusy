@@ -1,7 +1,7 @@
 var chai     = require('chai')
 var should   = chai.should()
 var moment   = require('moment')
-var freebusy = require('../index.js')
+var freebusy = require('../lib/index.js')
 
 var day0 = new Date;
 var day1 = moment(day0).subtract(1, 'days').toDate();
@@ -80,6 +80,12 @@ describe('BlockArray', function() {
           { start: day2, end: day1 },
           { start: day1, end: day0 }
         ])
+    })
+  })
+
+  describe('subtract', function() {
+    it('should completely remove blocks that are subsumed by the given block', function() {
+      // freebusy.BlockArray.days()
     })
   })
 

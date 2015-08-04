@@ -18,6 +18,9 @@ $ npm install --save freebusy
 var freebusy = require('freebusy')
 ```
 
+## Contributing
+
+Powered by npm scripts.
 
 ## License
 

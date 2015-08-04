@@ -15,9 +15,8 @@ Block.prototype.subtract = function (subtrahend) {
   return [
     new Block(this.start, subtrahend.start),
     new Block(subtrahend.end, this.end)
-  ].filter(function (block) {
-    return block.end > block.start
-  })
+  ]
+  .filter(λ(b) -> b.end > b.start)
 }
 
 Block.prototype.toObject = function () {
@@ -36,15 +35,11 @@ BlockArray.prototype.subtract = function (subtrahend) {
     .map(function (minuend) {
       return minuend.subtract(subtrahend)
     })
-    .filter(function (block) {
-      return block.end > block.start
-    })
+    .filter(λ(b) -> b.end > b.start)
 }
 
 BlockArray.prototype.toObject = function () {
-  return this.blocks.map(function (block) {
-    return block.toObject()
-  })
+  return this.blocks.map(λ.toObject())
 }
 
 BlockArray.days = function (start, end) {
