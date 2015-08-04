@@ -11,8 +11,13 @@ function Block(start, end) {
   this.end = end
 }
 
+Block.prototype.clone = function() {
+  return new Block(this.start, this.end)
+}
+
 Block.prototype.subtract = function (subtrahend) {
-  return [
+  var nonoverlapping = subtrahend.start > this.end || subtrahend.end < this.start
+  return nonoverlapping ? [this.clone()] : [
     new Block(this.start, subtrahend.start),
     new Block(subtrahend.end, this.end)
   ]
@@ -26,16 +31,16 @@ Block.prototype.toObject = function () {
   }
 }
 
-function BlockArray() {
-  this.blocks = []
+function BlockArray(blocks) {
+  this.blocks = blocks || []
 }
 
 BlockArray.prototype.subtract = function (subtrahend) {
-  return this.blocks
-    .map(function (minuend) {
-      return minuend.subtract(subtrahend)
-    })
-    .filter(λ(b) -> b.end > b.start)
+  return new BlockArray(Array.prototype.concat.apply([],
+    this.blocks.map(λ.subtract(subtrahend))
+      // .map(λ[console.log(#) || #])
+      // .filter(λ(b) -> b.end > b.start)
+  ))
 }
 
 BlockArray.prototype.toObject = function () {
