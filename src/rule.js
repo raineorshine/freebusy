@@ -16,6 +16,10 @@ function Rule(args) {
   this.exceptions = args.exceptions || []
 }
 
+Rule.fromObject = function (args) {
+  return new Rule(args)
+}
+
 Rule.prototype.match = function(event) {
   var that = this;
 
@@ -35,5 +39,12 @@ Rule.prototype.match = function(event) {
   return isMatch(event[this.field], this.value) &&  // current rule is a match and
     !this.exceptions.some(λ.match(event)) // every exception is not a match
 }
+
+// a rule that always matches
+Rule.true = (function () {
+  var rule = new Rule()
+  rule.match = λ -> true
+  return rule
+})()
 
 module.exports = Rule

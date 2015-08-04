@@ -2,7 +2,7 @@ Determine free time blocks given a list of busy times.
 
 Event
 ================
-- calendar      Personal/Work/etc
+- calendar      String (Personal/Work/etc)
 - title         String
 - description   String
 - location      String
