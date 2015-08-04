@@ -1,6 +1,6 @@
 {
   "name": "freebusy",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Determine free blocks from a list of events and free/busy rules.",
   "license": "ISC",
   "repository": "metaraine/freebusy",
