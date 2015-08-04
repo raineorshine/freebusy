@@ -11,6 +11,13 @@ var day2 = moment(day0).subtract(2, 'days').toDate();
 var day3 = moment(day0).subtract(3, 'days').toDate();
 var day7 = moment(day0).subtract(7, 'days').toDate();
 
+var day1event = {
+  title: 'School',
+  description: 'Time to go to school!',
+  start: moment(day1).add(2, 'hours').toDate(),
+  end: moment(day1).add(3, 'hours').toDate()
+}
+
 function toObject(block) {
   return block.toObject()
 }
@@ -153,6 +160,27 @@ describe('freebusy', function() {
         end: day0
       }
     ])
+  })
+
+  it('should return two free slots when there is an event in the middle of one day', function() {
+    freebusy(day1, day0, [day1event]).should.eql([
+      {
+        start: day1,
+        end: day1event.start
+      },
+      {
+        start: day1event.end,
+        end: day0
+      }
+    ])
+  })
+
+  it('should mark events that match a title rule as busy', function() {
+    true.should.equal(false)
+  })
+
+  it('should ignore events that do not match a title rule', function() {
+    true.should.equal(false)
   })
 
 })
