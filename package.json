@@ -21,7 +21,7 @@
   "scripts": {
     "test": "mocha",
     "watch": "nodemon -w src -w test -x 'npm run build && npm run test'",
-    "sweet": "sjs -m lambda-chop/macros -o lib/index.js src/index.js && sjs -m lambda-chop/macros -o lib/block.js src/block.js && sjs -m lambda-chop/macros -o lib/block-array.js src/block-array.js",
+    "sweet": "sjs -m lambda-chop/macros -o lib/index.js src/index.js && sjs -m lambda-chop/macros -o lib/block.js src/block.js && sjs -m lambda-chop/macros -o lib/block-array.js src/block-array.js && sjs -m lambda-chop/macros -o lib/rule.js src/rule.js",
     "build": "mkdir -p lib && npm run sweet"
   },
   "keywords": [
@@ -34,6 +34,7 @@
     "block"
   ],
   "dependencies": {
+    "lodash": "^3.10.1",
     "moment": "^2.10.6"
   },
   "devDependencies": {

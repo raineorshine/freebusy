@@ -4,6 +4,7 @@ var moment     = require('moment')
 var freebusy   = require('../lib/index.js')
 var Block      = require('../lib/block.js')
 var BlockArray = require('../lib/block-array.js')
+var Rule       = require('../lib/rule.js')
 
 var day0 = new Date;
 var day1 = moment(day0).subtract(1, 'days').toDate();
@@ -145,6 +146,117 @@ describe('BlockArray', function() {
           { start: day3, end: day2 },
           { start: day1, end: day0 }
         ])
+    })
+
+  })
+
+})
+
+describe('Rule', function() {
+
+  describe('match', function() {
+
+    it('should match the title of an event', function() {
+      var rule = new Rule({ field: 'title', value: 'test', conditionType: 'exact' })
+      rule.match({ title: 'test' }).should.equal(true)
+
+      var rule = new Rule({ field: 'title', value: 'test', conditionType: 'exact' })
+      rule.match({ title: 'other' }).should.equal(false)
+    })
+
+    it('should default to an exact match', function() {
+      var rule = new Rule({ field: 'title', value: 'test' })
+      rule.match({ title: 'test' }).should.equal(true)
+
+      var rule = new Rule({ field: 'title', value: 'test' })
+      rule.match({ title: 'other' }).should.equal(false)
+    })
+
+    it('should do a startsWith match', function() {
+      var rule = new Rule({ field: 'title', value: 'test', conditionType: 'startsWith' })
+      rule.match({ title: 'testing' }).should.equal(true)
+
+      var rule = new Rule({ field: 'title', value: 'test', conditionType: 'startsWith' })
+      rule.match({ title: 'whattest' }).should.equal(false)
+    })
+
+    it('should do an endsWith match', function() {
+      var rule = new Rule({ field: 'title', value: 'test', conditionType: 'endsWith' })
+      rule.match({ title: 'whattest' }).should.equal(true)
+
+      var rule = new Rule({ field: 'title', value: 'test', conditionType: 'endsWith' })
+      rule.match({ title: 'testing' }).should.equal(false)
+    })
+
+    it('should do a contains match', function() {
+      var rule = new Rule({ field: 'title', value: 'test', conditionType: 'contains' })
+      rule.match({ title: 'what\'s in a test?' }).should.equal(true)
+
+      var rule = new Rule({ field: 'title', value: 'test', conditionType: 'contains' })
+      rule.match({ title: 'nothing to see here' }).should.equal(false)
+    })
+
+    it('should do a regex match', function() {
+      var rule = new Rule({ field: 'title', value: /\d{3}/, conditionType: 'exact' })
+      rule.match({ title: '#000' }).should.equal(true)
+
+      var rule = new Rule({ field: 'title', value: /\d{3}/, conditionType: 'exact' })
+      rule.match({ title: '#0' }).should.equal(false)
+
+      var rule = new Rule({ field: 'title', value: /\d{3}/ })
+      rule.match({ title: '#000' }).should.equal(true)
+
+      var rule = new Rule({ field: 'title', value: /\d{3}/ })
+      rule.match({ title: '#0' }).should.equal(false)
+    })
+
+    it('should default to case insensitive', function() {
+      var rule = new Rule({ field: 'title', value: 'TEST', conditionType: 'contains' })
+      rule.match({ title: 'test' }).should.equal(true)
+    })
+
+    it('should allow configurable case sensitivity', function() {
+      var rule = new Rule({ field: 'title', value: 'TEST', conditionType: 'contains', caseSensitive: false })
+      rule.match({ title: 'test' }).should.equal(true)
+
+      var rule = new Rule({ field: 'title', value: 'TEST', conditionType: 'contains', caseSensitive: true })
+      rule.match({ title: 'test' }).should.equal(false)
+    })
+
+    it('should exclude exceptions', function() {
+
+      var rule = new Rule({
+        field: 'title',
+        value: 'TEST',
+        conditionType: 'contains',
+        exceptions: [
+          new Rule({ field: 'description', value: 'hi' })
+        ]
+      })
+      rule.match({ title: 'test', description: 'hi' }).should.equal(false)
+
+      var rule = new Rule({
+        field: 'title',
+        value: 'TEST',
+        conditionType: 'contains',
+        exceptions: [
+          new Rule({ field: 'description', value: 'blah' })
+        ]
+      })
+      rule.match({ title: 'test', description: 'hi' }).should.equal(true)
+
+      var rule = new Rule({
+        field: 'title',
+        value: 'TEST',
+        conditionType: 'contains',
+        exceptions: [
+          new Rule({ field: 'description', value: 'blah' }),
+          new Rule({ field: 'description', value: 'hi' }),
+          new Rule({ field: 'description', value: 'blah' })
+        ]
+      })
+      rule.match({ title: 'test', description: 'hi' }).should.equal(false)
+
     })
 
   })
