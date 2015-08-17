@@ -15,6 +15,10 @@ BlockArray.prototype.toObject = function () {
   return this.blocks.map(λ.toObject())
 }
 
+BlockArray.prototype.getBlocks = function () {
+  return Array.prototype.slice.call(this.blocks)
+}
+
 BlockArray.days = function (start, end) {
   var blockArray = new BlockArray()
 

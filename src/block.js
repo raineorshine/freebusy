@@ -23,4 +23,12 @@ Block.prototype.toObject = function () {
   }
 }
 
+Block.prototype.getStart = function () {
+  return this.start
+}
+
+Block.prototype.getEnd = function () {
+  return this.end
+}
+
 module.exports = Block

@@ -27,7 +27,7 @@ freebusy({
   }] 
 })
 
-/*
+// returns:
 [ 
   // June 1 is free
   { start: Mon Jun 01 2015 00:00:00 GMT-0600 (MDT),
@@ -41,7 +41,6 @@ freebusy({
   { start: Wed Jun 03 2015 00:00:00 GMT-0600 (MDT),
     end: Thu Jun 04 2015 00:00:00 GMT-0600 (MDT) } 
 ]
-*/
 ```
 
 ## Contributing
